@@ -1,0 +1,86 @@
+<html>
+<head>
+	<title>Lead Capture Form</title>
+	<style type="text/css">
+	p { border: 1px solid black; width: 400px; padding: 10px;}
+	</style>
+	<script type="text/javascript">
+	function checkSubmit() {
+		
+		// Please enter all ID's of your Multi-Select-Fields into this array.
+		multiPicklistFields = new Array("InterestPurchaseUnitType__c");
+		
+		// Enter the name of your form here. DEFAULT: web2prospect
+		var formName = "web2prospect";
+		
+		// DONT'T TOUCH THE CODE AFTER THIS LINE
+		for (var y=0; y < multiPicklistFields.length; y++) {
+			var string = "";
+			var field = multiPicklistFields[y];
+			for (var i=0; i < document.forms[formName].elements[field].length; i++) {
+				if (document.forms[formName].elements[field][i].checked) {
+					string += document.forms[formName].elements[field][i].value + "; ";
+				}
+			}
+			string = string.substr(0, string.length - 2);
+			field = document.createElement("input");
+			field.type = "hidden";
+			field.name = multiPicklistFields[y];
+			field.value = string;
+			document.forms[formName].appendChild(field);
+		}
+		return true;
+	}
+	</script>
+</head>
+<body>
+<h1>Contact</h1>
+
+<form name="web2prospect" onsubmit="return checkSubmit();" method="get" action="http://pbdev3-developer-edition.na6.force.com/PHPLeadCapture">
+<input type="hidden" name="PersonLeadSource" value="Web" />
+<input type="hidden" name="success_page" value="http://leadCapture.local/lead_success.html" />
+<input type="hidden" name="fail_page" value="http://leadCapture.local/lead_fail.php" />
+<p>
+<label for="FirstName">First name</label><br/>
+<input type="text" size="20" name="FirstName" maxlength="40" id="FirstName" /><br/>
+</p>
+<p>
+<label for="LastName">Last name</label><br/>
+<input type="text" size="50" name="LastName" maxlength="80" id="LastName" /><br/>
+</p>
+<p>
+<label for="PersonEmail">Email</label><br/>
+<input type="text" size="50" name="PersonEmail" maxlength="80" id="PersonEmail" /><br/>
+</p>
+<p>
+<label for="Phone">Telephone</label><br/>
+<input type="text" size="50" name="Phone" maxlength="40" id="Phone" /><br/>
+</p>
+<p>
+<label for="CountryOfResidence__pc">Country</label><br/>
+<input type="text" size="20" name="CountryOfResidence__pc" maxlength="40" id="CountryOfResidence__pc" /><br/>
+</p>
+<p>
+<label for="InterestBuyBudgetFrom__c">Interest Buy Budget From</label><br/>
+<input type="text" class="textfield" name="InterestBuyBudgetFrom__c" id="price-min" /><br/>
+</p>
+<p>
+<label for="type-lot">Apartment</label>
+<input type="checkbox" class="checkbox" name="InterestPurchaseUnitType__c[]" id="InterestPurchaseUnitType__c" value="Apartment"/>
+
+<label for="type-lot">Villa</label>
+<input type="checkbox" class="checkbox" name="InterestPurchaseUnitType__c[]" id="InterestPurchaseUnitType__c" value="Villa"/>
+
+<label for="type-lot">Office</label>
+<input type="checkbox" class="checkbox" name="InterestPurchaseUnitType__c[]" id="InterestPurchaseUnitType__c" value="Office"/>
+</p>
+<p>
+<label for="Description">Your Message</label><br/>
+<textarea rows="2" name="Description" maxlength="2000" id="Description" style="width: 305px;" /></textarea><br/>
+</p>
+<p>
+<input type="submit" value="Submit" name="submit" />
+</p>
+</form>
+</body>
+</html>
